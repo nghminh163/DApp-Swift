@@ -26,30 +26,28 @@ public class DAppRequest{
         return try? response.result(as: String.self)
     }
     
-
+    
     
     var walletAccount: String {
         return session.walletInfo!.accounts[0]
     }
     
     
-    public func sendTransaction(){
-        //        try? client.send(nonceRequest()) { [weak self] response in
-        //        guard let self = self, let nonce = self.nonce(from: response) else { return }
-        let transaction = transaction(from: self.walletAccount)
+    public func sendTransaction(to:String, gas:String?, gasPrice:String?, value:String){
+        let transaction = transaction(from: self.walletAccount, to:to, gas: gas, gasPrice:gasPrice, value:value)
         try? self.client.eth_sendTransaction(url: session.url, transaction: transaction) { [weak self] response in
             self?.handleReponse(response, expecting: "Hash")
-            //        }
         }
     }
     
-    private func transaction(from address: String) -> Client.Transaction {
+    
+    private func transaction(from address: String,to:String, gas:String?, gasPrice:String?, value:String) -> Client.Transaction {
         return Client.Transaction(from: address,
-                                  to: "0x448Ecb63760587f8a177c5a9EA323b3e39731E4F",
+                                  to:to,
                                   data:"",
-                                  gas: nil,
-                                  gasPrice: nil,
-                                  value: "0x5AF3107A4000",
+                                  gas: gas,
+                                  gasPrice: gasPrice,
+                                  value: value,
                                   nonce: nil,
                                   type: nil,
                                   accessList: nil,

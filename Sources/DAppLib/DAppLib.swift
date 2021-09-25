@@ -14,7 +14,7 @@ public class DAppLib {
     var delegate: WalletConnectDelegate
     
     
-    let sessionKey = "sessionKey"
+    let sessionKey = "sessionKfey"
     
     public init(delegate: WalletConnectDelegate) {
         self.delegate = delegate
